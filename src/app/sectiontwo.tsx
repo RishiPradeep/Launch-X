@@ -1,4 +1,5 @@
 import { Reveal } from "./reveal";
+import { BsBoxArrowUpRight } from "react-icons/bs";
 export default function Sectiontwo() {
   return (
     <>
@@ -18,7 +19,18 @@ export default function Sectiontwo() {
               and from Earth orbit, and beyond. It is the only spacecraft
               currently flying that is capable of returning significant amounts
               of cargo to Earth, and is the first private spacecraft to take
-              humans to the space station.
+              humans to the space station.{" "}
+              <span className="text-green-400">
+                <a
+                  href="https://en.wikipedia.org/wiki/SpaceX_Dragon"
+                  target="_blank"
+                >
+                  Learn More{" "}
+                  <span className="inline-block scale-75">
+                    <BsBoxArrowUpRight />
+                  </span>
+                </a>
+              </span>
             </p>
           </Reveal>
           <Reveal>

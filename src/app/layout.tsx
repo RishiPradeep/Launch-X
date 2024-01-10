@@ -2,7 +2,6 @@
 import type { Metadata } from "next";
 import { Manrope } from "next/font/google";
 import "./globals.css";
-
 const inter = Manrope({ subsets: ["latin"], weight: ["400", "700"] });
 
 export const metadata: Metadata = {
