@@ -1,16 +1,14 @@
 export default function LaunchCard() {
   return (
-    <div className="launchcard-container m-5 grid grid-cols-3 gap-2 divide-x-2 rounded-2xl border-2 border-gray-500 p-5 text-white shadow-lg">
-      <div
-        style={{
-          background: "url(https://images2.imgbox.com/6c/cb/na1tzhHs_o.png)",
-        }}
-        className="image-container ml-5 h-52 overflow-hidden rounded-full"
-      ></div>
-      <div className="col-span-2 p-5">
-        <h1 className="text-2xl font-bold">Name of Rocket</h1>
-        <p>Description of rocket</p>
+    <div className="grid grid-cols-5 border-2 border-slate-700 text-2xl text-white">
+      <div className="p-5 col-span-1">
+        <img
+          className="h-32"
+          src="https://images2.imgbox.com/95/39/sRqN7rsv_o.png"
+          alt="image"
+        />
       </div>
+      <div className="col-span-4 p-5">This is the main Heading</div>
     </div>
   );
 }

@@ -18,9 +18,6 @@
 
 .launches_background {
     background-color: #121212;
-    height: 100vh;
-    width: 100vw;
-    overflow-x: hidden;
 }
 
 .searchbar {

@@ -30,27 +30,36 @@ export default function Launches() {
         </h1>
       ) : (
         <div className="launches_background">
-          <div className="grid grid-cols-2">
-            <h1 className="font-bold text-9xl text-green-400 ml-20 p-5">
-              Launches
-            </h1>
-            <div className="flex items-center mt-6 ml-96">
-              <label
-                className="border-4 border-slate-700 bg-slate-700 rounded-l p-2"
-                htmlFor="searchbar"
-              >
-                <FaSearch class="text-green-400 text-2xl" />
-              </label>
-              <input
-                id="searchbar"
-                type="text"
-                className="searchbar border-4 border-slate-700 p-2 rounded-r text-white"
-                placeholder="Search..."
-              />
+          <div className="container mx-auto">
+            <div className="grid grid-cols-5">
+              <h1 className="font-bold text-9xl text-green-400 col-span-4">
+                Launches
+              </h1>
+              <div className="flex items-center content-end mt-6 text-right">
+                <label
+                  className="border-4 border-slate-700 bg-slate-700 rounded-l p-2"
+                  htmlFor="searchbar"
+                >
+                  <FaSearch class="text-green-400 text-2xl" />
+                </label>
+                <input
+                  id="searchbar"
+                  type="text"
+                  className="searchbar border-4 border-slate-700 p-2 rounded-r text-white"
+                  placeholder="Search..."
+                />
+              </div>
             </div>
-          </div>
-          <div className="ml-20 p-5">
-            <Leftnav></Leftnav>
+            <div className="container mx-auto">
+              <div className="grid grid-cols-4 pt-5 pb-5">
+                <div className="">
+                  <Leftnav></Leftnav>
+                </div>
+                <div className="col-span-3">
+                  <LaunchCard></LaunchCard>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       )}

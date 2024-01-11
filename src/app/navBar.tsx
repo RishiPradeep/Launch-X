@@ -34,7 +34,7 @@ export default function NavBar() {
   ];
 
   return (
-    <div className="w-screen overflow-clip bg-nav h-20 text-gray-500 shadow-lg bg-black">
+    <div className="text-gray-500 bg-black">
       <div className="p-7">
         <ul className="flex flex-row gap-8">
           <li className="h-5">
