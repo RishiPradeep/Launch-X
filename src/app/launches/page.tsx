@@ -5,7 +5,10 @@ import LaunchCard from "./launchCard";
 import "../globals.css";
 import Leftnav from "./LeftNavBar";
 import { FaSearch } from "react-icons/fa";
+import { useSelector } from "react-redux";
+import { selectMenuOption } from "../../store/menuSlice";
 export default function Launches() {
+  const option = useSelector(selectMenuOption);
   const [loading, setLoading] = useState(false);
   const [launches, setLaunches] = useState([]);
 
@@ -26,6 +29,10 @@ export default function Launches() {
     getLanches();
   }, []);
 
+  useEffect(() => {
+    console.log(option);
+  }, [option]);
+
   return (
     <div className="container-launches">
       <NavBar></NavBar>
@@ -36,7 +43,7 @@ export default function Launches() {
       ) : (
         <div className="launches_background">
           <div className="container mx-auto">
-            <div className="grid grid-cols-5">
+            <div className="grid grid-cols-5 mb-3">
               <h1 className="font-bold text-9xl text-green-400 col-span-4">
                 Launches
               </h1>

@@ -1,5 +1,5 @@
+"use client";
 export default function LaunchCard(launch: any) {
-  console.log(launch);
   return (
     <div className="grid grid-cols-8 border-2 border-slate-700 text-white">
       <div className="p-5 col-span-1">
