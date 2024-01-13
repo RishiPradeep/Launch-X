@@ -11,12 +11,17 @@ export default function Launches() {
 
   useEffect(() => {
     const getLanches = async () => {
+      setLaunches([]);
       setLoading(true);
-      const response = await fetch("https://api.spacexdata.com/v3/launches");
+      const response = await fetch("https://api.spacexdata.com/v4/launches", {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
       const data = await response.json();
       setLaunches(data);
       setLoading(false);
-      console.log(data);
     };
     getLanches();
   }, []);
@@ -56,7 +61,11 @@ export default function Launches() {
                   <Leftnav></Leftnav>
                 </div>
                 <div className="col-span-3">
-                  <LaunchCard></LaunchCard>
+                  <div className="flex-col gap-5">
+                    {launches.map((launch, index) => (
+                      <LaunchCard key={index} launch={launch}></LaunchCard>
+                    ))}
+                  </div>
                 </div>
               </div>
             </div>
