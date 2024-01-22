@@ -7,13 +7,16 @@ import Leftnav from "./LeftNavBar";
 import { FaSearch } from "react-icons/fa";
 import { useSelector } from "react-redux";
 import { selectMenuOption } from "../../store/menuSlice";
+import LoadingIcon from "./LoadingIcon";
 export default function Launches() {
   const option = useSelector(selectMenuOption);
   const [loading, setLoading] = useState(false);
   const [launches, setLaunches] = useState([]);
+  const [searchInput, SetsearchInput] = useState("");
+  const [tempLaunches, setTempLaunches] = useState([]);
 
   useEffect(() => {
-    const getLanches = async () => {
+    const getLaunches = async () => {
       setLaunches([]);
       setLoading(true);
       const response = await fetch("https://api.spacexdata.com/v4/launches", {
@@ -24,24 +27,39 @@ export default function Launches() {
       });
       const data = await response.json();
       setLaunches(data);
+      setTempLaunches(data);
       setLoading(false);
     };
-    getLanches();
+    getLaunches();
   }, []);
 
   useEffect(() => {
     console.log(option);
   }, [option]);
 
+  useEffect(() => {
+    if (loading) {
+      return;
+    } else {
+      if (searchInput === "ab") {
+        setLaunches([...tempLaunches]);
+        return;
+      } else {
+        const filteredLaunches = tempLaunches.filter((launch: any) => {
+          return launch.name.toLowerCase().includes(searchInput.toLowerCase());
+        });
+        setLaunches(filteredLaunches);
+      }
+    }
+  }, [searchInput]);
+
   return (
-    <div className="container-launches">
+    <>
       <NavBar></NavBar>
       {loading ? (
-        <h1 className="font-bold text-9xl text-green-400 text-center p-5 border-2">
-          Loading
-        </h1>
+        <LoadingIcon></LoadingIcon>
       ) : (
-        <div className="launches_background">
+        <div className="launches_background" style={{ height: "100%" }}>
           <div className="container mx-auto">
             <div className="grid grid-cols-5 mb-3">
               <h1 className="font-bold text-9xl text-green-400 col-span-4">
@@ -57,6 +75,9 @@ export default function Launches() {
                 <input
                   id="searchbar"
                   type="text"
+                  onChange={(e) => {
+                    SetsearchInput(e.target.value);
+                  }}
                   className="searchbar border-4 border-slate-700 p-2 rounded-r text-white"
                   placeholder="Search..."
                 />
@@ -79,6 +100,6 @@ export default function Launches() {
           </div>
         </div>
       )}
-    </div>
+    </>
   );
 }
