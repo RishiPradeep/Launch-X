@@ -8,12 +8,19 @@ import { FaSearch } from "react-icons/fa";
 import { useSelector } from "react-redux";
 import { selectMenuOption } from "../../store/menuSlice";
 import LoadingIcon from "./LoadingIcon";
+import InfiniteScroll from "react-infinite-scroll-component";
+
 export default function Launches() {
   const option = useSelector(selectMenuOption);
   const [loading, setLoading] = useState(false);
   const [launches, setLaunches] = useState([]);
   const [searchInput, SetsearchInput] = useState("");
   const [tempLaunches, setTempLaunches] = useState([]);
+  const [hasMore, setHasMore] = useState(true);
+  const [dataDetails, setDataDetails] = useState({
+    next: "",
+    count: 0,
+  });
 
   useEffect(() => {
     const getLaunches = async () => {
@@ -31,6 +38,7 @@ export default function Launches() {
       const data = await response.json();
       setLaunches(data.results);
       setTempLaunches(data.results);
+      setDataDetails({ next: data.next, count: data.count });
       setLoading(false);
     };
     getLaunches();
@@ -70,13 +78,33 @@ export default function Launches() {
     }
   }, [searchInput]);
 
+  const getNextData = async () => {
+    if (dataDetails.count === launches.length || dataDetails.next === null) {
+      setHasMore(false);
+      return;
+    }
+    const response = await fetch(dataDetails.next, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+    const data = await response.json();
+    setLaunches([...launches, ...data.results]);
+    setTempLaunches([...tempLaunches, ...data.results]);
+    setDataDetails({ next: data.next, count: data.count });
+  };
+
   return (
     <>
       <NavBar></NavBar>
       {loading ? (
         <LoadingIcon></LoadingIcon>
       ) : (
-        <div className="launches_background" style={{ height: "100%" }}>
+        <div
+          className="launches_background bg-fixed"
+          style={{ height: "100vh" }}
+        >
           <div className="container mx-auto">
             <div className="grid grid-cols-5 mb-3">
               <h1 className="font-bold text-9xl text-green-400 col-span-4">
@@ -105,12 +133,39 @@ export default function Launches() {
                 <div className="">
                   <Leftnav></Leftnav>
                 </div>
-                <div className="col-span-3">
-                  <div className="flex-col gap-5">
-                    {launches.map((launch, index) => (
-                      <LaunchCard key={index} launch={launch}></LaunchCard>
-                    ))}
-                  </div>
+                <div
+                  id="scrollableDiv"
+                  className="col-span-3 overflow-y-scroll"
+                  style={{ height: "800px" }}
+                >
+                  <InfiniteScroll
+                    dataLength={launches.length}
+                    next={getNextData}
+                    hasMore={hasMore}
+                    loader={
+                      <p
+                        className="text-green-400 mt-4"
+                        style={{ textAlign: "center" }}
+                      >
+                        <b>Loading ...</b>
+                      </p>
+                    }
+                    endMessage={
+                      <p
+                        className="text-green-400 mt-4"
+                        style={{ textAlign: "center" }}
+                      >
+                        <b>Yay! You have seen it all</b>
+                      </p>
+                    }
+                    scrollableTarget="scrollableDiv"
+                  >
+                    <div className="flex-col gap-5">
+                      {launches.map((launch, index) => (
+                        <LaunchCard key={index} launch={launch}></LaunchCard>
+                      ))}
+                    </div>
+                  </InfiniteScroll>
                 </div>
               </div>
             </div>

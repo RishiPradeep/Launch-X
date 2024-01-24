@@ -18,7 +18,7 @@ export default function RootLayout({
 }) {
   return (
     <StoreProvider>
-      <html className="htmlmain" lang="en">
+      <html className="htmlmain" lang="en" style={{ scrollBehavior: "smooth" }}>
         <body className={`${inter.className}`}>{children}</body>
       </html>
     </StoreProvider>
