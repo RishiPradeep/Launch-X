@@ -19,22 +19,39 @@ export default function Launches() {
     const getLaunches = async () => {
       setLaunches([]);
       setLoading(true);
-      const response = await fetch("https://api.spacexdata.com/v4/launches", {
-        method: "GET",
-        headers: {
-          "Content-Type": "application/json",
-        },
-      });
+      const response = await fetch(
+        "https://lldev.thespacedevs.com/2.2.0/launch/?limit=10",
+        {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
       const data = await response.json();
-      setLaunches(data);
-      setTempLaunches(data);
+      setLaunches(data.results);
+      setTempLaunches(data.results);
       setLoading(false);
     };
     getLaunches();
   }, []);
 
   useEffect(() => {
-    console.log(option);
+    if (option === 0) {
+      console.log("option 0");
+    }
+
+    if (option === 1) {
+      console.log("option 1");
+    }
+
+    if (option === 2) {
+      console.log("option 2");
+    }
+
+    if (option === 3) {
+      console.log("option 3");
+    }
   }, [option]);
 
   useEffect(() => {
